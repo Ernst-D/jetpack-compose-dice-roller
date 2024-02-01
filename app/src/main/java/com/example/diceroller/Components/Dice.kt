@@ -29,18 +29,26 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier){
             mutableIntStateOf(1)
         }
 
-        Image(painter = painterResource(id = R.drawable.dice_1), contentDescription ="Roll: $result")
+        val dice = when (result) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
+        }
+
+        Image(painter = painterResource(id = dice), contentDescription ="Roll: $result")
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            println("Increment roll")
-            result++
+            result = (1..6).random()
         }) {
             Text(stringResource(id = R.string.dice_text)+" $result")
         }
     }
 }
 
-@Preview(name = "dice-with-btn-and-image-preview", showBackground = true)
+@Preview(name = "dice-with-btn-and-image-preview", showBackground = true, showSystemUi = true)
 @Composable
 fun DiceWithButtonAndImagePreview(modifier: Modifier = Modifier){
     DiceWithButtonAndImage(
