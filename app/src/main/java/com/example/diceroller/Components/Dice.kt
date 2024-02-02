@@ -18,13 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.diceroller.R
 
 @Composable
-fun DiceWithButtonAndImage(modifier: Modifier = Modifier){
-    Column (modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally){
+fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         var result by remember {
             mutableIntStateOf(1)
         }
@@ -38,21 +40,22 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier){
             else -> R.drawable.dice_6
         }
 
-        Image(painter = painterResource(id = dice), contentDescription ="Roll: $result")
+        Image(painter = painterResource(id = dice), contentDescription = "Roll: $result")
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = {
+        Button(modifier = Modifier.semantics { contentDescription = "RollBtn" }, onClick = {
             result = (1..6).random()
         }) {
-            Text(stringResource(id = R.string.dice_text)+" $result")
+            Text(stringResource(id = R.string.dice_text) + " $result")
         }
     }
 }
 
 @Preview(name = "dice-with-btn-and-image-preview", showBackground = true, showSystemUi = true)
 @Composable
-fun DiceWithButtonAndImagePreview(modifier: Modifier = Modifier){
+fun DiceWithButtonAndImagePreview(modifier: Modifier = Modifier) {
     DiceWithButtonAndImage(
         modifier = Modifier
             .fillMaxSize()
-            .wrapContentSize(Alignment.Center))
+            .wrapContentSize(Alignment.Center)
+    )
 }
